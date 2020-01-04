@@ -21,7 +21,8 @@ dependencies:
     sdk: flutter
   firebase_auth: ^0.14.0+5
   cloud_firestore: ^0.12.9+5
-#  image_picker: 0.6.2
+  splashscreen:
+  #  image_picker: 0.6.2
   shared_preferences: ^0.5.3+4
   firebase_storage: ^3.0.6
   firebase_database: ^3.0.7

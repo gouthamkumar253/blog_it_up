@@ -1,6 +1,7 @@
 import 'package:blogitup/utils/toast_display.dart';
 import 'package:flutter/material.dart';
 import 'package:blogitup/services/authentication.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class LoginSignupPage extends StatefulWidget {
   const LoginSignupPage({this.auth, this.loginCallback});
@@ -53,12 +54,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           );
           setState(() {
             _isLoading = false;
-            userId=null;
+            userId = null;
             _formKey.currentState.reset();
-            _isLoginForm=true;
+            _isLoginForm = true;
           });
         }
-        if (userId.isNotEmpty && userId != null && _isLoginForm) {
+        if (userId != null && userId.isNotEmpty && _isLoginForm) {
           widget.loginCallback();
         }
       } catch (e) {
@@ -132,8 +133,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             children: <Widget>[
               Container(
                 height: 220,
-                child: Image.asset(
-                  'assets/images/blog_home.png',
+                child: FadeInImage(
+                  placeholder: MemoryImage(kTransparentImage),
+                  image: const AssetImage('assets/images/blog_home.png'),
                   fit: BoxFit.cover,
                 ),
               ),

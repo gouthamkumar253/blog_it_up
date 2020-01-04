@@ -12,6 +12,7 @@ import 'package:pk_skeleton/pk_skeleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class UsersList extends StatefulWidget {
   const UsersList({this.callback});
@@ -104,11 +105,11 @@ class _UsersListState extends State<UsersList> {
                                 height: 200,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  image: DecorationImage(
-                                    image: const AssetImage(
-                                      'assets/images/blog_image.png',
-                                    ),
-                                  ),
+                                ),
+                                child: FadeInImage(
+                                  placeholder: MemoryImage(kTransparentImage),
+                                  image: const AssetImage(
+                                      'assets/images/blog_image.png'),
                                 ),
                               ),
                             ),

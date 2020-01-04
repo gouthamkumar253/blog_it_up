@@ -67,9 +67,9 @@ class _NewBlogState extends State<NewBlog> {
 //
 //
 //      final DocumentReference documentReference = Firestore.instance
-//          .collection('users')
-//          .document(chatId)
-//          .collection('messages').document(DateTime.now().millisecondsSinceEpoch.toString());
+//          .collection('blogs')
+//          .document(id)
+//          .collection('images').document(DateTime.now().millisecondsSinceEpoch.toString());
 //      Firestore.instance.runTransaction((Transaction transaction) async {
 //        await transaction.set(
 //          documentReference,
