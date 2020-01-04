@@ -97,7 +97,7 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId != null && _userId.isNotEmpty) {
-          return UsersList(
+          return BlogFeed(
             callback: logoutCallBack,
           );
         } else

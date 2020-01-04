@@ -5,10 +5,10 @@ import 'package:blogitup/utils/toast_display.dart';
 import 'package:blogitup/utils/write_blog_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pk_skeleton/pk_skeleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:blogitup/utils/bottom_Sheet.dart';
 
 class BlogComments extends StatefulWidget {
   const BlogComments({Key key, this.blogId}) : super(key: key);
@@ -76,8 +76,8 @@ class _BlogCommentsState extends State<BlogComments> {
 
   void showBottomModalSheet(BuildContext context, String title, int mode,
       {String id = ''}) {
-    TextEditingController _commentController = TextEditingController();
-    showModalBottomSheet<dynamic>(
+    final TextEditingController _commentController = TextEditingController();
+    showModBottomSheet<dynamic>(
       context: context,
       builder: (BuildContext buildContext) {
         return SafeArea(
@@ -103,8 +103,9 @@ class _BlogCommentsState extends State<BlogComments> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       focusedBorder: const OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5.0)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(5.0),
+                        ),
                         borderSide: const BorderSide(
                           color: Color(0xFFF3F1F1),
                         ),
@@ -122,19 +123,28 @@ class _BlogCommentsState extends State<BlogComments> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       InkWell(
                         onTap: () {
-                          final CommentPost postData = CommentPost();
-                          postData.comment = _commentController.text;
-                          postData.master = mode == 1 ? true : false;
-                          mode == 1
-                              ? postComment(postData)
-                              : postReply(postData, id);
+                          if (_commentController.text != null &&
+                              _commentController.text.isNotEmpty) {
+                            final CommentPost postData = CommentPost();
+                            postData.comment = _commentController.text;
+                            postData.master = mode == 1 ? true : false;
+                            mode == 1
+                                ? postComment(postData)
+                                : postReply(postData, id);
+                          } else
+                            ToastMessage().showToast(
+                              'Please enter a comment',
+                              2,
+                              context,
+                            );
                         },
                         child: Container(
                           width: 100,
@@ -207,7 +217,8 @@ class _BlogCommentsState extends State<BlogComments> {
                                 items[index]
                                     .data['author']
                                     .toString()
-                                    .substring(0, 1),
+                                    .substring(0, 1)
+                                    .toUpperCase(),
                               ),
                             ),
                             const SizedBox(
@@ -260,7 +271,7 @@ class _BlogCommentsState extends State<BlogComments> {
                                                   .toDate())
                                               .toString(),
                                           style: const TextStyle(
-                                              color: Color(0xFF929498)),
+                                              color: Color(0xFF929498),),
                                         ),
                                         const SizedBox(
                                           width: 10,
@@ -338,7 +349,8 @@ class _BlogCommentsState extends State<BlogComments> {
                                                                       'author']
                                                                   .toString()
                                                                   .substring(
-                                                                      0, 1),
+                                                                      0, 1)
+                                                                  .toUpperCase(),
                                                             ),
                                                           ),
                                                           const SizedBox(

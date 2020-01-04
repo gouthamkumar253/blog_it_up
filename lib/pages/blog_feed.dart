@@ -14,16 +14,16 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class UsersList extends StatefulWidget {
-  const UsersList({this.callback});
+class BlogFeed extends StatefulWidget {
+  const BlogFeed({this.callback});
 
   final VoidCallback callback;
 
   @override
-  _UsersListState createState() => _UsersListState();
+  _BlogFeedState createState() => _BlogFeedState();
 }
 
-class _UsersListState extends State<UsersList> {
+class _BlogFeedState extends State<BlogFeed> {
   String username;
 
   Future<void> initializeUser() async {
@@ -119,7 +119,8 @@ class _UsersListState extends State<UsersList> {
                                   items[index]
                                       .data['author']
                                       .toString()
-                                      .substring(0, 1),
+                                      .substring(0, 1)
+                                      .toUpperCase(),
                                 ),
                               ),
                               title: Text(
@@ -138,10 +139,6 @@ class _UsersListState extends State<UsersList> {
                                         .data['created_at']
                                         .toDate())
                                     .toString(),
-                              ),
-                              trailing: Icon(
-                                Icons.favorite_border,
-                                color: Colors.red,
                               ),
                             ),
                             Padding(
@@ -175,10 +172,12 @@ class _UsersListState extends State<UsersList> {
                                       children: <Widget>[
                                         const Text(
                                           'View all comments ',
+                                          style: TextStyle(color: Colors.lightBlue),
                                         ),
                                         Icon(
                                           Icons.arrow_forward_ios,
                                           size: 12,
+                                          color: Colors.lightBlue,
                                         ),
                                       ],
                                     ),

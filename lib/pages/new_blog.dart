@@ -1,11 +1,13 @@
-
 import 'package:blogitup/models/blog_model.dart';
 import 'package:blogitup/shared_preferences/shared_pref.dart';
 import 'package:blogitup/utils/app_loader.dart';
+import 'package:blogitup/utils/flare_tick.dart';
 import 'package:blogitup/utils/toast_display.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 //import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+
 //import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,12 +35,17 @@ class _NewBlogState extends State<NewBlog> {
         post.toJson(),
       );
     }).then((_) {
-      ToastMessage().showToast('Blog posted successfully', 3, context);
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
-
+      Navigator.of(context).push(
+        PageRouteBuilder<Widget>(
+          opaque: false,
+          pageBuilder: (BuildContext context, _, __) {
+            return const FlareTick(message: 'Blog Posted Successfully');
+          },
+        ),
+      );
     }).catchError((dynamic error) {
-      ToastMessage().showToast('Something went wrong. Try again later', 3, context);
+      ToastMessage()
+          .showToast('Something went wrong. Try again later', 3, context);
     });
   }
 
@@ -93,7 +100,7 @@ class _NewBlogState extends State<NewBlog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Blog title',
+                  'Blog title (Required)',
                   style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.blue,
@@ -134,7 +141,7 @@ class _NewBlogState extends State<NewBlog> {
                   height: 20,
                 ),
                 Text(
-                  'Blog Content',
+                  'Blog Content (Required)',
                   style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.blue,
@@ -180,18 +187,22 @@ class _NewBlogState extends State<NewBlog> {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                          PageRouteBuilder<Widget>(
-                            opaque: false,
-                            pageBuilder: (BuildContext context, __, _) =>
-                                AppLoader(),
-                          ),
-                        );
-                        final BlogPost post = BlogPost();
-                        post.blogTitle = _blogTitleController.text;
-                        post.blogContent = _blogContentController.text;
-                        post.likes = 0;
-                        postBlog(post);
+                        if (_blogContentController != null &&
+                            _blogContentController.text.isNotEmpty &&
+                            _blogTitleController.text.isNotEmpty &&
+                            _blogTitleController != null) {
+                          final BlogPost post = BlogPost();
+                          post.blogTitle = _blogTitleController.text;
+                          post.blogContent = _blogContentController.text;
+                          post.likes = 0;
+                          postBlog(post);
+                        } else {
+                          ToastMessage().showToast(
+                            'Please fill in the required fields',
+                            2,
+                            context,
+                          );
+                        }
                       },
                       child: Container(
                         width: 100,

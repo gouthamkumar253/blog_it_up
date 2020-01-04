@@ -1,7 +1,4 @@
-import 'package:blogitup/models/comments_model.dart';
-import 'package:blogitup/shared_preferences/shared_pref.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:toast/toast.dart';
 import 'package:flutter/material.dart';
 

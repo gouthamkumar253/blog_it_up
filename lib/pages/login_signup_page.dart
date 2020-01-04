@@ -114,7 +114,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget _showCircularProgress() {
     if (_isLoading) {
-      return Center(child: const CircularProgressIndicator());
+      return const Center(child: const CircularProgressIndicator());
     }
     return Container(
       height: 0.0,
